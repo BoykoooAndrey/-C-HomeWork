@@ -21,9 +21,6 @@ int SecondMax(int[] numbers)
         {
             max = numbers[i];
         }
-    }
-    for (int i = 0; i < numbers.Length; i++)
-    {
         if (numbers[i] > secmax && numbers[i] != max)
         {
             secmax = numbers[i];
