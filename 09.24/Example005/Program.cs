@@ -29,62 +29,46 @@ void PrintArray(int[,] array)
     }
     System.Console.WriteLine();
 }
-int[,] numbers = GenerateArray(4, 4);
+int[,] numbers = GenerateArray(8, 8);
 int number = 1;
 void Completion(int row, int column)
 {
-    if ((row < numbers.GetLength(0) && column < numbers.GetLength(1)) && (row >= 0 && column >= 0))
+    numbers[row, column] = number;
+    number++;
+    if ((column < numbers.GetLength(1) - 1))
     {
-        if (numbers[row, column] == 0)
+        if (numbers[row, column + 1] == 0 && (row == 0 || numbers[row - 1, column] != 0))
         {
-            if (number < numbers.GetLength(1))
-            {
-                numbers[row, column] = number;
-                number++;
-                Completion(row, column + 1);
-            }
-            if (numbers.GetLength(1) - 1 < number && number < 2 * numbers.GetLength(0) - 1)
-            {
-                numbers[row, column] = number;
-                number++;
-                Completion(row + 1, column);
-            }
-            if (6 < number && number < 10)
-            {
-                numbers[row, column] = number;
-                number++;
-                Completion(row, column - 1);
-            }
-            if (9 < number && number < 12)
-            {
-                numbers[row, column] = number;
-                number++;
-                Completion(row - 1, column);
-            }
-            if (11 < number && number < 14)
-            {
-                numbers[row, column] = number;
-                number++;
-                Completion(row, column + 1);
-            }
-            if (13 < number && number < 15)
-            {
-                numbers[row, column] = number;
-                number++;
-                Completion(row + 1, column);
-            }
-            if (14 < number && number < 16)
-            {
-                numbers[row, column] = number;
-                number++;
-                Completion(row, column - 1);
-            }
-            if (15 < number && number < 17)
-            {
-                numbers[row, column] = number;
-                number++;
-                Completion(row, column);
-            }
+
+            Completion(row, column + 1);
+        }
+    }
+    if (row < numbers.GetLength(0) - 1)
+    {
+        if (numbers[row + 1, column] == 0 && (column == numbers.GetLength(1) - 1 || (numbers[row - 1, column] != 0
+                                                                                    && numbers[row, column + 1] != 0)))
+        {
+
+            Completion(row + 1, column);
+        }
+    }
+    if (column > 0)
+    {
+        if (numbers[row, column - 1] == 0 && (row == numbers.GetLength(0) - 1 || (numbers[row + 1, column] != 0
+                                                                                && numbers[row, column + 1] != 0
+                                                                                && numbers[row, column - 1] == 0)))
+        {
+            Completion(row, column - 1);
+        }
+    }
+    if (row > 0)
+    {
+        if (numbers[row - 1, column] == 0 && (column == 0 || (numbers[row + 1, column] != 0
+                                                            && numbers[row, column - 1] != 0
+                                                            && numbers[row - 1, column] == 0)))
+        {
+
+            Completion(row - 1, column);
         }
     }
 }
